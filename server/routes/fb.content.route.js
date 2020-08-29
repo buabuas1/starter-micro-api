@@ -11,6 +11,9 @@ router.use(passport.authenticate('jwt', { session: false }))
 router.route('/')
   .post(asyncHandler(insert));
 
+router.route('/bulk')
+  .post(asyncHandler(insertBulk));
+
 router.route('/')
   .get(asyncHandler(get));
 
@@ -20,7 +23,12 @@ async function insert(req, res) {
   res.json(user);
 }
 
+async function insertBulk(req, res) {
+  let user = await fbCtrl.insertBulk(req.body);
+  res.json(user);
+}
+
 async function get(req, res) {
-  let user = await fbCtrl.get(req.body);
+  let user = await fbCtrl.get(req);
   res.json(user);
 }

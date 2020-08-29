@@ -12,8 +12,10 @@ const fbContentSchema = Joi.object({
   url: Joi.string()
 })
 
+const bulkSchema = Joi.array().items(fbContentSchema)
 module.exports = {
   insert,
+  insertBulk,
   get
 }
 
@@ -22,7 +24,20 @@ async function insert(content) {
   return await new FbContent(content).save();
 }
 
-async function get() {
-  let users = FbContent.find({});
+async function insertBulk(content) {
+  content = await Joi.validate(content.data, bulkSchema, { abortEarly: false });
+  return await new Promise((resolve, reject) => {
+    FbContent.insertMany(content, (error, docs) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve('Success!');
+        }
+    });
+  })
+}
+
+async function get(request) {
+  let users = FbContent.find({'postTime': {$gt: new Date(request.query.postTime)}});
   return users;
 }
