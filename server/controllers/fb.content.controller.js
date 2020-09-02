@@ -27,13 +27,14 @@ async function insert(content) {
 async function insertBulk(content) {
   content = await Joi.validate(content.data, bulkSchema, { abortEarly: false });
   return await new Promise((resolve, reject) => {
-    FbContent.insertMany(content, (error, docs) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve('Success!');
-        }
-    });
+    try {
+      content.forEach(async (c, i) => {
+        await FbContent.updateOne({'id': c.id}, c, {upsert: true})
+      })
+    } catch (e) {
+      reject(error);
+    }
+    resolve('Success!');
   })
 }
 
