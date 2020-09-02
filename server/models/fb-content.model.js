@@ -25,6 +25,12 @@ const FbContentSchema = new mongoose.Schema({
   url: {
     type: String,
   },
+  groupId: {
+    type: String,
+  },
+  commentCount: {
+    type: Number,
+  },
   createdDate: {
     type: Date,
     default: Date.now

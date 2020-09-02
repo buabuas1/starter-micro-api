@@ -14,6 +14,12 @@ router.route('/')
 router.route('/bulk')
   .post(asyncHandler(insertBulk));
 
+router.route('/chart')
+  .get(asyncHandler(getChart));
+
+router.route('/chart/top/post')
+  .get(asyncHandler(getTopPostChart));
+
 router.route('/')
   .get(asyncHandler(get));
 
@@ -30,5 +36,16 @@ async function insertBulk(req, res) {
 
 async function get(req, res) {
   let user = await fbCtrl.get(req);
+  res.json(user);
+}
+
+async function getChart(req, res) {
+  let user = await fbCtrl.getGroupFindRoomChart(req);
+  res.json(user);
+}
+
+
+async function getTopPostChart(req, res) {
+  let user = await fbCtrl.getTopPostChart(req);
   res.json(user);
 }
