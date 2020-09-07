@@ -31,6 +31,9 @@ const FbContentSchema = new mongoose.Schema({
   commentCount: {
     type: Number,
   },
+  authorId: {
+    type: String,
+  },
   createdDate: {
     type: Date,
     default: Date.now
