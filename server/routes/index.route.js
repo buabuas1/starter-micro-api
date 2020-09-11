@@ -3,6 +3,8 @@ const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
 const fbContentRoutes = require('./fb.content.route');
 const groupUserRoutes = require('./group.user.route');
+const userFriendRoutes = require('./user.friend.route');
+const blackListUserRoutes = require('./black.list.user.route');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -15,5 +17,7 @@ router.use('/auth', authRoutes);
 router.use('/user', userRoutes);
 router.use('/fbcontent', fbContentRoutes);
 router.use('/group/user', groupUserRoutes);
+router.use('/user/friend', userFriendRoutes);
+router.use('/blacklist', blackListUserRoutes);
 
 module.exports = router;
