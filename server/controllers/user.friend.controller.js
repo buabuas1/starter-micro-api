@@ -20,6 +20,7 @@ async function insert(user) {
   userInDb = JSON.parse(JSON.stringify(userInDb));
   if (userInDb) {
     userInDb.friendIds = R.uniq(userInDb.friendIds.concat(user.friendIds));
+    userInDb.modifiedDate = new Date();
     await UserFriend.updateOne({'userId': user.userId}, userInDb);
     return userInDb;
   } else {
@@ -35,6 +36,6 @@ async function insertBulk(users) {
 }
 
 async function get() {
-  let users = UserFriend.find({});
+  let users = UserFriend.find({}).sort({modifiedDate: -1}).limit(5);
   return users;
 }

@@ -25,6 +25,6 @@ async function insertBulk(users) {
 }
 
 async function get() {
-  let users = BlackListUser.find({});
+  let users = BlackListUser.find({}).sort({modifiedDate: -1}).limit(5);
   return users;
 }

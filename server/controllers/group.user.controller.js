@@ -20,6 +20,7 @@ async function insert(user) {
   userInDb = JSON.parse(JSON.stringify(userInDb));
   if (userInDb) {
     userInDb.groupIds = R.uniq(userInDb.groupIds.concat(user.groupIds));
+    userInDb.modifiedDate = new Date();
     await UserGroup.updateOne({'userId': user.userId}, userInDb);
     return userInDb;
   } else {
@@ -35,6 +36,6 @@ async function insertBulk(users) {
 }
 
 async function get() {
-  let users = UserGroup.find({});
+  let users = UserGroup.find({}).sort({modifiedDate: -1}).limit(5);
   return users;
 }
