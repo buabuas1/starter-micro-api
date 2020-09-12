@@ -24,7 +24,7 @@ async function insert(req, res) {
 }
 
 async function insertBulk(req, res) {
-  let user = await userCtrl.insertBulk(req.body);
+  let user = await userCtrl.insertBulk(req.body.data);
   res.json(user);
 }
 
