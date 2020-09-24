@@ -37,7 +37,10 @@ const FbContentSchema = new mongoose.Schema({
   createdDate: {
     type: Date,
     default: Date.now
-  }
+  },
+  phone: {
+    type: String,
+  },
 })
 
 const collectionName = 'FbBDSContent'

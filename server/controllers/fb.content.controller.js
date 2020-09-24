@@ -12,7 +12,8 @@ const fbContentSchema = Joi.object({
   url: Joi.string(),
   commentCount: Joi.number(),
   groupId: Joi.string(),
-  authorId: Joi.string()
+  authorId: Joi.string(),
+  phone: Joi.any()
 })
 
 const bulkSchema = Joi.array().items(fbContentSchema)
