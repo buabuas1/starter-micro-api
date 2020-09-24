@@ -53,7 +53,7 @@ async function get(request) {
   if (request.query.groupIds && request.query.groupIds.length > 0) {
     query.groupId = {$in: request.query.groupIds.split(',')};
   }
-  let users = FbContent.find(query);
+  let users = FbContent.find(query).sort({createdDate: -1});
   return users;
 }
 
