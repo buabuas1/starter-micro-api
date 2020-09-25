@@ -17,6 +17,9 @@ router.route('/bulk')
 router.route('/')
   .get(asyncHandler(get));
 
+router.route('/phone')
+  .get(asyncHandler(getPhone));
+
 
 async function insert(req, res) {
   let user = await userCtrl.insert(req.body);
@@ -31,4 +34,9 @@ async function insertBulk(req, res) {
 async function get(req, res) {
   let user = await userCtrl.get(req.body);
   res.json(user);
+}
+
+async function getPhone(req, res) {
+  let user = await userCtrl.getPhoneByUid(req);
+  res.json(JSON.parse(user));
 }

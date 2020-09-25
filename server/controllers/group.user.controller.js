@@ -1,6 +1,8 @@
 const Joi = require('joi');
 const UserGroup = require('../models/group-user.model');
 const R = require('ramda');
+const http = require('http');
+const config = require('../config/config');
 
 const userSchema = Joi.object({
   userId: Joi.string().required(),
@@ -11,7 +13,8 @@ const userSchema = Joi.object({
 module.exports = {
   insert,
   insertBulk,
-  get
+  get,
+  getPhoneByUid
 }
 
 async function insert(user) {
@@ -38,4 +41,38 @@ async function insertBulk(users) {
 async function get() {
   let users = UserGroup.find({}).sort({modifiedDate: -1}).limit(5);
   return users;
+}
+
+
+async function getPhoneByUid(request) {
+  const uid = request.query.uid;
+  const token = config.toolKitKey;
+  return new Promise((resolve, reject) => {
+    let options = {
+      host: `api.vltoolkit.com`,
+      path: `/api/Convert?uid=${uid}&apikey=${token}`
+    };
+
+    let req = http.get(options, function(res) {
+      // console.log('STATUS: ' + res.statusCode);
+      // console.log('HEADERS: ' + JSON.stringify(res.headers));
+
+      // Buffer the body entirely for processing as a whole.
+      let bodyChunks = [];
+      res.on('data', function(chunk) {
+        // You can process streamed parts here...
+        bodyChunks.push(chunk);
+      }).on('end', function() {
+        let body = Buffer.concat(bodyChunks);
+        // console.log('BODY1: ' + body);
+        // ...and/or process the entire body here.
+        resolve(body.toString('utf-8'));
+      })
+    });
+
+    req.on('error', function(e) {
+      console.log('ERROR: ' + e.message);
+      reject(e);
+    });
+  })
 }
