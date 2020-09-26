@@ -41,6 +41,13 @@ const FbContentSchema = new mongoose.Schema({
   phone: {
     type: String,
   },
+  isComment: {
+    type: Boolean,
+    default: false
+  },
+  parentContent: {
+    type: String,
+  }
 })
 
 const collectionName = 'FbBDSContent'
