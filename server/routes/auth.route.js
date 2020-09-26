@@ -23,6 +23,9 @@ async function register(req, res, next) {
 
 function login(req, res) {
   let user = req.user;
+  if (!user.expireDate || user.expireDate.getTime() < Date.now()) {
+    res.send(401, 'Tài khoản đã hết hạn');
+  }
   let token = authCtrl.generateToken(user);
   res.json({ user, token });
 }

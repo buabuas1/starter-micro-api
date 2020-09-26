@@ -20,9 +20,13 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  expireDate: {
+    type: Date,
+    default: new Date(new Date().getTime() + 2592000000)
+  },
   roles: [{
     type: String,
-  }]
+  }],
 }, {
   versionKey: false
 });
