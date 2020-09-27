@@ -5,7 +5,8 @@ const AreaSchema = Joi.object({
   content: Joi.string().required(),
   createdDate: Joi.date(),
   modifiedDate: Joi.date(),
-  createdBy: Joi.string().required()
+  createdBy: Joi.string().required(),
+  name: Joi.string().required()
 })
 
 
