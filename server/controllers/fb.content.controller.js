@@ -56,6 +56,9 @@ async function get(request) {
   if (request.query.groupIds && request.query.groupIds.length > 0) {
     query.groupId = {$in: request.query.groupIds.split(',')};
   }
+  if (request.query.createdDate) {
+    query.createdDate = {$gte: new Date(request.query.createdDate)};
+  }
   let users = FbContent.find(query).sort({_id: -1});
   return users;
 }
