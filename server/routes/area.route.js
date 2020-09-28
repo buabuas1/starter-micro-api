@@ -14,6 +14,9 @@ router.route('/')
 router.route('/')
   .get(asyncHandler(get));
 
+router.route('/:id')
+  .delete(asyncHandler(deleteArea));
+
 
 async function insert(req, res) {
   let area = await areaCtrl.insert(req);
@@ -24,3 +27,9 @@ async function get(req, res) {
   let area = await areaCtrl.get(req);
   res.json(area);
 }
+
+async function deleteArea(req, res) {
+  let area = await areaCtrl.deleteArea(req);
+  res.json(area);
+}
+
