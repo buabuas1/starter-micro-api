@@ -6,6 +6,13 @@ const groupUserRoutes = require('./group.user.route');
 const userFriendRoutes = require('./user.friend.route');
 const blackListUserRoutes = require('./black.list.user.route');
 const areaRoutes = require('./area.route');
+const hostRoutes = require('./manage/host.route');
+const houseRoutes = require('./manage/house.route');
+const roomRoutes = require('./manage/room.route');
+const invoiceRoutes = require('./manage/invoice.route');
+const customerRoutes = require('./manage/customer.route');
+const productRoutes = require('./manage/product.route');
+const feeRoutes = require('./manage/fee.route');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -21,5 +28,12 @@ router.use('/group/user', groupUserRoutes);
 router.use('/user/friend', userFriendRoutes);
 router.use('/blacklist', blackListUserRoutes);
 router.use('/area', areaRoutes);
+router.use('/host', hostRoutes);
+router.use('/house', houseRoutes);
+router.use('/room', roomRoutes);
+router.use('/invoice', invoiceRoutes);
+router.use('/customer', customerRoutes);
+router.use('/product', productRoutes);
+router.use('/fee', feeRoutes);
 
 module.exports = router;
