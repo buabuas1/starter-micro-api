@@ -7,6 +7,8 @@ const HostSchema = new mongoose.Schema({
   },
   phone:  {
     type: String,
+    required: true,
+    unique: true
   },
   createdBy: {
     type: String,

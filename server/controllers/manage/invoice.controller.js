@@ -10,8 +10,8 @@ const InvoiceSchema = Joi.object({
   item: Joi.array().items(
     InvoiceDetailSchema
   ).required(),
-  roomId: Joi.string().required(),
-  customerId: Joi.string().required(),
+  room: Joi.string().required(),
+  customer: Joi.string().required(),
   total: Joi.number().required(),
   code: Joi.string().required()
 })
@@ -30,15 +30,15 @@ async function insert(req) {
     const origin = JSON.parse(JSON.stringify(invoice));
     delete invoice._id;
     await Joi.validate(invoice, InvoiceSchema, {abortEarly: false});
-    return Invoice.findByIdAndUpdate(origin._id, origin, {upsert: true, setDefaultsOnInsert: true})
+    invoice = await Invoice.findByIdAndUpdate(origin._id, origin, {upsert: true, setDefaultsOnInsert: true})
+    return getById(invoice._id);
   } else {
     invoice = await Joi.validate(invoice, InvoiceSchema, {abortEarly: false});
     let item = invoice.item;
     delete invoice.item;
     invoice = await new Invoice(invoice).save();
     await createInvoiceDetail(invoice._id, item);
-    return Invoice.findOne({_id: invoice._id})
-      .populate("item");
+    return getById(invoice._id);
   }
 }
 
@@ -61,3 +61,15 @@ async function createInvoiceDetail(invoiceId, invoiceDetail) {
     );
   });
 };
+
+function getById(id) {
+  return Invoice.findOne({_id: id})
+    .populate({
+      path: "item",
+      populate: {
+        path: "product"
+      }
+    })
+    .populate('customer')
+    .populate('room');
+}

@@ -9,9 +9,10 @@ const HouseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  hostId: {
-    type: String,
-    required: true,
+  host: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Host',
+    required: true
   },
   createdBy: {
     type: String,

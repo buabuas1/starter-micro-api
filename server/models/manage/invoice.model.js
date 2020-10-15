@@ -5,13 +5,15 @@ const InvoiceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  roomId: {
-    type: String,
-    required: true,
+  room: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Room',
+    required: true
   },
-  customerId: {
-    type: String,
-    required: true,
+  customer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Customer',
+    required: true
   },
   total: {
     type: Number,
@@ -29,7 +31,7 @@ const InvoiceSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  item: [{ type: mongoose.Schema.Types.ObjectId, ref: 'InvoiceDetail' }]
+  item: [{ type: mongoose.Schema.Types.ObjectId, ref: 'InvoiceDetail' }],
 })
 
 const collectionName = 'Invoice'

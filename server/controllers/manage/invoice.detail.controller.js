@@ -4,7 +4,7 @@ const InvoiceDetail = require('../../models/manage/invoice.detail.model');
 const InvoiceDetailSchema = Joi.object({
   createdDate: Joi.date(),
   modifiedDate: Joi.date(),
-  productId: Joi.string().required(),
+  product: Joi.string().required(),
   unit: Joi.string().required(),
   note: Joi.string(),
   price: Joi.number().required(),

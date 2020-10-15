@@ -5,7 +5,7 @@ const RoomSchema = Joi.object({
   createdDate: Joi.date(),
   modifiedDate: Joi.date(),
   createdBy: Joi.string().required(),
-  houseId: Joi.string().required(),
+  house: Joi.string().required(),
   name: Joi.string().required()
 })
 
@@ -23,15 +23,17 @@ async function insert(req) {
     const origin = JSON.parse(JSON.stringify(area));
     delete area._id;
     await Joi.validate(area, RoomSchema, { abortEarly: false });
-    return Room.findByIdAndUpdate(origin._id, origin, {upsert: true, setDefaultsOnInsert: true})
+    await Room.findByIdAndUpdate(origin._id, origin, {upsert: true, setDefaultsOnInsert: true})
+    return Room.findOne({_id: area._id}).populate('house');
   } else {
     area = await Joi.validate(area, RoomSchema, { abortEarly: false });
-    return await new Room(area).save();
+    area = await new Room(area).save();
+    return Room.findOne({_id: area._id}).populate('house');
   }
 }
 
 async function get(req) {
-  let areas = Room.find();
+  let areas = Room.find().populate('house');
   return areas;
 }
 

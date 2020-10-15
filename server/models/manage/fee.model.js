@@ -24,6 +24,11 @@ const FeeSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  house: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'House',
+    required: true
+  },
   createdBy: {
     type: String,
     required: true,

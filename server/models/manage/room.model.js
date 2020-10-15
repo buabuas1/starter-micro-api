@@ -5,9 +5,10 @@ const RoomSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  houseId: {
-    type: String,
-    required: true,
+  house: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'House',
+    required: true
   },
   createdBy: {
     type: String,

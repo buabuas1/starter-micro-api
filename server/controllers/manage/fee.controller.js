@@ -1,11 +1,16 @@
 const Joi = require('joi');
-const Fee = require('../../models/manage/host.model');
+const Fee = require('../../models/manage/fee.model');
 
 const FeeSchema = Joi.object({
   createdDate: Joi.date(),
   modifiedDate: Joi.date(),
   createdBy: Joi.string().required(),
-  phone: Joi.string(),
+  unit: Joi.string(),
+  note: Joi.string(),
+  price: Joi.number(),
+  totalPrice: Joi.number().required(),
+  quantity: Joi.number(),
+  house: Joi.string(),
   name: Joi.string().required()
 })
 
@@ -23,10 +28,12 @@ async function insert(req) {
     const origin = JSON.parse(JSON.stringify(area));
     delete area._id;
     await Joi.validate(area, FeeSchema, { abortEarly: false });
-    return Fee.findByIdAndUpdate(origin._id, origin, {upsert: true, setDefaultsOnInsert: true})
+    area = Fee.findByIdAndUpdate(origin._id, origin, {upsert: true, setDefaultsOnInsert: true});
+    return getById(area._id);
   } else {
     area = await Joi.validate(area, FeeSchema, { abortEarly: false });
-    return await new Fee(area).save();
+    area = await new Fee(area).save();
+    return getById(area._id);
   }
 }
 
@@ -38,4 +45,8 @@ async function get(req) {
 async function deleteFee(req) {
   let areas = await Fee.deleteOne({'_id': req.params.id});
   return areas;
+}
+
+function getById(id) {
+  return Fee.findOne({_id: id}).populate('house');
 }
