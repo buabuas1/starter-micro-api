@@ -10,6 +10,11 @@ const RoomSchema = new mongoose.Schema({
     ref: 'House',
     required: true
   },
+  item: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product',
+    required: true
+  }],
   createdBy: {
     type: String,
     required: true,
