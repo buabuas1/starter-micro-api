@@ -5,6 +5,7 @@ const RoomSchema = Joi.object({
   createdDate: Joi.date(),
   modifiedDate: Joi.date(),
   createdBy: Joi.string().required(),
+  customer: Joi.string().required(),
   house: Joi.string().required(),
   name: Joi.string().required(),
   item: Joi.array().items().required()
