@@ -35,7 +35,7 @@ async function insert(req) {
 }
 
 async function get(req) {
-  let areas = Room.find().populate('house').populate('item');
+  let areas = Room.find().populate('house').populate('item').populate('customer');
   return areas;
 }
 
@@ -45,5 +45,5 @@ async function deleteRoom(req) {
 }
 
 function getById(id) {
-  return Room.findOne({_id: id}).populate('house').populate('item');
+  return Room.findOne({_id: id}).populate('house').populate('item').populate('customer');
 }
