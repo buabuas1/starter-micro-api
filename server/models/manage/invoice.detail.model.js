@@ -6,10 +6,6 @@ const InvoiceDetailSchema = new mongoose.Schema({
     ref: 'Product',
     required: true,
   },
-  unit: {
-    type: String,
-    required: true
-  },
   note: {
     type: String
   },

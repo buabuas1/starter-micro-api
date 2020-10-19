@@ -5,7 +5,6 @@ const InvoiceDetailSchema = Joi.object({
   createdDate: Joi.date(),
   modifiedDate: Joi.date(),
   product: Joi.string().required(),
-  unit: Joi.string().required(),
   note: Joi.string(),
   price: Joi.number().required(),
   totalPrice: Joi.number().required(),
