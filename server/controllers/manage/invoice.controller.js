@@ -43,7 +43,7 @@ async function insert(req) {
 }
 
 async function get(req) {
-  let areas = Invoice.find();
+  let areas = getById();
   return areas;
 }
 
@@ -63,13 +63,25 @@ async function createInvoiceDetail(invoiceId, invoiceDetail) {
 };
 
 function getById(id) {
-  return Invoice.findOne({_id: id})
-    .populate({
-      path: "item",
-      populate: {
-        path: "product"
-      }
-    })
-    .populate('customer')
-    .populate('room');
+  if (!id) {
+    return Invoice.find()
+      .populate({
+        path: "item",
+        populate: {
+          path: "product"
+        }
+      })
+      .populate('customer')
+      .populate('room');
+  } else {
+    return Invoice.findOne({_id: id})
+      .populate({
+        path: "item",
+        populate: {
+          path: "product"
+        }
+      })
+      .populate('customer')
+      .populate('room');
+  }
 }
