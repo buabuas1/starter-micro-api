@@ -72,7 +72,12 @@ function getById(id) {
         }
       })
       .populate('customer')
-      .populate('room');
+      .populate({
+        path: "room",
+        populate: {
+          path: "house"
+        }
+      });
   } else {
     return Invoice.findOne({_id: id})
       .populate({
@@ -82,6 +87,11 @@ function getById(id) {
         }
       })
       .populate('customer')
-      .populate('room');
+      .populate({
+        path: "room",
+        populate: {
+          path: "house"
+        }
+      });
   }
 }
