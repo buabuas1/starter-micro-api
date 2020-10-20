@@ -65,6 +65,7 @@ async function createInvoiceDetail(invoiceId, invoiceDetail) {
 function getById(id) {
   if (!id) {
     return Invoice.find()
+      .sort({createdDate: -1})
       .populate({
         path: "item",
         populate: {
@@ -80,6 +81,7 @@ function getById(id) {
       });
   } else {
     return Invoice.findOne({_id: id})
+      .sort({createdDate: -1})
       .populate({
         path: "item",
         populate: {
