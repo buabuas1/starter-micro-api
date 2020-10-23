@@ -5,7 +5,7 @@ const ProductSchema = Joi.object({
   createdDate: Joi.date(),
   modifiedDate: Joi.date(),
   createdBy: Joi.string().required(),
-  type: Joi.string().required(),
+  type: Joi.number().required(),
   price: Joi.number().required(),
   unit: Joi.string().required(),
   name: Joi.string().required()
