@@ -8,7 +8,8 @@ const ProductSchema = Joi.object({
   type: Joi.number().required(),
   price: Joi.number().required(),
   unit: Joi.string().required(),
-  name: Joi.string().required()
+  name: Joi.string().required(),
+  _v: Joi.any()
 })
 
 
