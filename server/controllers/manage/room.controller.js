@@ -5,6 +5,7 @@ const RoomSchema = Joi.object({
   createdDate: Joi.date(),
   modifiedDate: Joi.date(),
   createdBy: Joi.string().required(),
+  numberOfCustomer: Joi.number().required(),
   customer: Joi.string().required(),
   house: Joi.string().required(),
   name: Joi.string().required(),
@@ -35,7 +36,7 @@ async function insert(req) {
 }
 
 async function get(req) {
-  let areas = Room.find().populate('house').populate('item').populate('customer');
+  let areas = Room.find().select('-__v').populate('house').populate('item').populate('customer');
   return areas;
 }
 

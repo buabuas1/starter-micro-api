@@ -15,6 +15,10 @@ const RoomSchema = new mongoose.Schema({
     ref: 'Customer',
     required: true
   },
+  numberOfCustomer: {
+    type: Number,
+    required: true
+  },
   item: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product',

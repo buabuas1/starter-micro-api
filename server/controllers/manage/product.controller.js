@@ -8,8 +8,7 @@ const ProductSchema = Joi.object({
   type: Joi.number().required(),
   price: Joi.number().required(),
   unit: Joi.string().required(),
-  name: Joi.string().required(),
-  _v: Joi.any()
+  name: Joi.string().required()
 })
 
 
@@ -34,7 +33,7 @@ async function insert(req) {
 }
 
 async function get(req) {
-  let areas = Product.find();
+  let areas = Product.find().select('-__v');
   return areas;
 }
 
