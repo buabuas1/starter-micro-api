@@ -31,7 +31,7 @@ async function insert(req) {
 }
 
 async function get(req) {
-  let areas = Area.find({createdBy: req.user._id.toString()});
+  let areas = Area.find({createdBy: req.user._id.toString()}).select('-__v');
   return areas;
 }
 

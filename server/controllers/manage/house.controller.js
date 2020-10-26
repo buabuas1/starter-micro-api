@@ -34,7 +34,7 @@ async function insert(req) {
 }
 
 async function get(req) {
-  let areas = House.find().populate('host');
+  let areas = House.find().populate('host').select('-__v');
   return areas;
 }
 
@@ -44,5 +44,5 @@ async function deleteHouse(req) {
 }
 
 function getById(id) {
-  return House.findOne({_id: id}).populate('host');
+  return House.findOne({_id: id}).populate('host').select('-__v');
 }

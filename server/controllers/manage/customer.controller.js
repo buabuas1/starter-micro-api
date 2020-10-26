@@ -31,7 +31,7 @@ async function insert(req) {
 }
 
 async function get(req) {
-  let areas = Customer.find();
+  let areas = Customer.find().select('-__v');
   return areas;
 }
 

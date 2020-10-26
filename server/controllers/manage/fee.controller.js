@@ -38,7 +38,7 @@ async function insert(req) {
 }
 
 async function get(req) {
-  let areas = Fee.find();
+  let areas = Fee.find().select('-__v');
   return areas;
 }
 
@@ -48,5 +48,5 @@ async function deleteFee(req) {
 }
 
 function getById(id) {
-  return Fee.findOne({_id: id}).populate('house');
+  return Fee.findOne({_id: id}).populate('house').select('-__v');
 }

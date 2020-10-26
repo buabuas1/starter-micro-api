@@ -76,7 +76,10 @@ function getById(id) {
       .populate({
         path: "room",
         populate: {
-          path: "house"
+          path: "house",
+          populate: {
+            path: "host"
+          }
         }
       });
   } else {
