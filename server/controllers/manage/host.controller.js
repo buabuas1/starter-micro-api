@@ -23,7 +23,7 @@ async function insert(req) {
     const origin = JSON.parse(JSON.stringify(area));
     delete area._id;
     await Joi.validate(area, HostSchema, { abortEarly: false });
-    return Host.findByIdAndUpdate(origin._id, origin, {upsert: true, setDefaultsOnInsert: true})
+    return Host.findByIdAndUpdate(origin._id, origin, {upsert: true, setDefaultsOnInsert: true, new: true})
   } else {
     area = await Joi.validate(area, HostSchema, { abortEarly: false });
     return await new Host(area).save();

@@ -30,7 +30,7 @@ async function insert(req) {
     const origin = JSON.parse(JSON.stringify(invoice));
     delete invoice._id;
     await Joi.validate(invoice, InvoiceSchema, {abortEarly: false});
-    invoice = await Invoice.findByIdAndUpdate(origin._id, origin, {upsert: true, setDefaultsOnInsert: true})
+    invoice = await Invoice.findByIdAndUpdate(origin._id, origin, {upsert: true, setDefaultsOnInsert: true, new: true})
     return getById(invoice._id);
   } else {
     invoice = await Joi.validate(invoice, InvoiceSchema, {abortEarly: false});

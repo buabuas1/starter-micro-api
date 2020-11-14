@@ -26,7 +26,7 @@ async function insert(req) {
     const origin = JSON.parse(JSON.stringify(area));
     delete area._id;
     await Joi.validate(area, RoomSchema, { abortEarly: false });
-    await Room.findByIdAndUpdate(origin._id, origin, {upsert: true, setDefaultsOnInsert: true})
+    await Room.findByIdAndUpdate(origin._id, origin, {upsert: true, setDefaultsOnInsert: true, new: true})
     return getById(origin._id);
   } else {
     area = await Joi.validate(area, RoomSchema, { abortEarly: false });

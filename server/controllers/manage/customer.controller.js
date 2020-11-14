@@ -23,7 +23,7 @@ async function insert(req) {
     const origin = JSON.parse(JSON.stringify(area));
     delete area._id;
     await Joi.validate(area, CustomerSchema, { abortEarly: false });
-    return Customer.findByIdAndUpdate(origin._id, origin, {upsert: true, setDefaultsOnInsert: true})
+    return Customer.findByIdAndUpdate(origin._id, origin, {upsert: true, setDefaultsOnInsert: true, new: true})
   } else {
     area = await Joi.validate(area, CustomerSchema, { abortEarly: false });
     return await new Customer(area).save();

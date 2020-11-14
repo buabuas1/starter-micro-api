@@ -40,7 +40,7 @@ async function insertBulk(content) {
   return await new Promise((resolve, reject) => {
     try {
       content.forEach(async (c, i) => {
-        await FbContent.findOneAndUpdate({'id': c.id}, c, {upsert: true, setDefaultsOnInsert: true})
+        await FbContent.findOneAndUpdate({'id': c.id}, c, {upsert: true, setDefaultsOnInsert: true, new: true, new: true})
       })
     } catch (e) {
       reject(error);

@@ -13,6 +13,7 @@ const invoiceRoutes = require('./manage/invoice.route');
 const customerRoutes = require('./manage/customer.route');
 const productRoutes = require('./manage/product.route');
 const feeRoutes = require('./manage/fee.route');
+const fbTokenRoutes = require('./user-facebook-token.route');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -35,5 +36,6 @@ router.use('/invoice', invoiceRoutes);
 router.use('/customer', customerRoutes);
 router.use('/product', productRoutes);
 router.use('/fee', feeRoutes);
+router.use('/fbtoken', fbTokenRoutes);
 
 module.exports = router;
