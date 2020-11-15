@@ -4,13 +4,16 @@ const BlackListUserSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: true,
-    unique: true
+  },
+  facebookUuid: {
+    type: String,
+    required: true
+  },
+  createdBy: {
+    type: String,
+    required: true
   },
   createdDate: {
-    type: Date,
-    default: Date.now
-  },
-  modifiedDate: {
     type: Date,
     default: Date.now
   }

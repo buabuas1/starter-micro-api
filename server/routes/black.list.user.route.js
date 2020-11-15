@@ -19,16 +19,16 @@ router.route('/')
 
 
 async function insert(req, res) {
-  let user = await userCtrl.insert(req.body);
+  let user = await userCtrl.insert(req);
   res.json(user);
 }
 
 async function insertBulk(req, res) {
-  let user = await userCtrl.insertBulk(req.body.data);
+  let user = await userCtrl.insertBulk(req);
   res.json(user);
 }
 
 async function get(req, res) {
-  let user = await userCtrl.get(req.body);
+  let user = await userCtrl.get(req);
   res.json(user);
 }
