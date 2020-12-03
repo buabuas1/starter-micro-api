@@ -18,6 +18,10 @@ const UserFacebookTokenSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  getMemberOfGroupSecondBody: {
+    type: String,
+    required: true
+  },
   inviteFriendToGroupBody: {
     type: String,
     required: true
