@@ -5,6 +5,15 @@ const Member = require('../models/member.model');
 const userSchema = Joi.object({
   userId: Joi.string().required(),
   groupId: Joi.string().required(),
+  isUsed: Joi.any(),
+  usedByUuid: Joi.string(),
+  usedByName: Joi.string()
+})
+
+const markSchema = Joi.object({
+  ids: Joi.array().required(),
+  usedByUuid: Joi.string().required(),
+  usedByName: Joi.string().required()
 })
 
 const bulkSchema = Joi.array().items(userSchema)
@@ -12,7 +21,8 @@ const bulkSchema = Joi.array().items(userSchema)
 module.exports = {
   insert,
   insertBulk,
-  get
+  get,
+  markIsUsed
 }
 
 async function insert(user) {
@@ -34,13 +44,23 @@ async function insertBulk(users) {
 }
 
 async function get(req) {
-  let start = 0;
   let pageSize = req.query.pageSize ? parseInt(req.query.pageSize) : 200;
-  if (req.query.pageNum && req.query.pageSize) {
-    start = (parseInt(req.query.pageNum) - 1) * pageSize;
-  }
-  let users = Member.find({'_id': {$gt: req.query.cursor}}).select('-__v')
-    .skip(start)
+
+  let users = Member.find({'isUsed': {$ne: true}}).select('-__v').sort({"_id": -1})
     .limit(pageSize);
+  return users;
+}
+
+
+async function markIsUsed(req) {
+  await Joi.validate(req.body, markSchema, { abortEarly: false });
+  const ids = req.body.ids;
+  const usedByUuid = req.body.usedByUuid;
+  const usedByName = req.body.usedByName;
+  let users = Member.updateMany({_id: {$in: ids}}, { $set: {
+      isUsed: true,
+      usedByUuid: usedByUuid,
+      usedByName: usedByName
+  } })
   return users;
 }

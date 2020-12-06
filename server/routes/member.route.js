@@ -14,6 +14,9 @@ router.route('/')
 router.route('/bulk')
   .post(asyncHandler(insertBulk));
 
+router.route('/mark')
+  .post(asyncHandler(markIsUsed));
+
 router.route('/')
   .get(asyncHandler(get));
 
@@ -32,3 +35,9 @@ async function get(req, res) {
   let user = await memCtrl.get(req);
   res.json(user);
 }
+
+async function markIsUsed(req, res) {
+  let user = await memCtrl.markIsUsed(req);
+  res.json(user);
+}
+

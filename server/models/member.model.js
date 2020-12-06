@@ -17,6 +17,16 @@ const MemberSchema = new mongoose.Schema({
   modifiedDate: {
     type: Date,
     default: Date.now
+  },
+  isUsed: {
+    type: Boolean,
+    default: false
+  },
+  usedByUuid: {
+    type: String
+  },
+  usedByName: {
+    type: String
   }
 })
 
