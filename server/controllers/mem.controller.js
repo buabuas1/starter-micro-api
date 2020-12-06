@@ -57,7 +57,7 @@ async function markIsUsed(req) {
   const ids = req.body.ids;
   const usedByUuid = req.body.usedByUuid;
   const usedByName = req.body.usedByName;
-  let users = Member.updateMany({_id: {$in: ids}}, { $set: {
+  let users = Member.updateMany({userId: {$in: ids}}, { $set: {
       isUsed: true,
       usedByUuid: usedByUuid,
       usedByName: usedByName
