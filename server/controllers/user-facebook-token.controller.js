@@ -11,6 +11,7 @@ const UserFacebookTokenSchema = Joi.object({
   inviteFriendToGroupBody: Joi.string(),
   addFriendBody: Joi.string(),
   cookie: Joi.string().required(),
+  agent: Joi.string().required(),
   token: Joi.string().required(),
   createdBy: Joi.string().required(),
   facebookUuid: Joi.string().required(),

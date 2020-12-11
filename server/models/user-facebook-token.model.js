@@ -38,6 +38,10 @@ const UserFacebookTokenSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  agent: {
+    type: String,
+    required: true
+  },
   facebookUuid: {
     type: String,
     required: true
