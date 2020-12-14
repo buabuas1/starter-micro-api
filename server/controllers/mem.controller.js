@@ -22,7 +22,8 @@ module.exports = {
   insert,
   insertBulk,
   get,
-  markIsUsed
+  markIsUsed,
+  markIsUnUsed
 }
 
 async function insert(user) {
@@ -62,5 +63,19 @@ async function markIsUsed(req) {
       usedByUuid: usedByUuid,
       usedByName: usedByName
   } })
+  return users;
+}
+
+
+async function markIsUnUsed(req) {
+  await Joi.validate(req.body, markSchema, { abortEarly: false });
+  const ids = req.body.ids;
+  const usedByUuid = req.body.usedByUuid;
+  const usedByName = req.body.usedByName;
+  let users = Member.updateMany({userId: {$in: ids}}, { $set: {
+      isUsed: false,
+      usedByUuid: usedByUuid,
+      usedByName: usedByName
+    } })
   return users;
 }
