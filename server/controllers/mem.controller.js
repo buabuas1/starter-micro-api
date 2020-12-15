@@ -41,7 +41,7 @@ async function insertBulk(users) {
   for (let i = 0; i < users.length; i++) {
     users[i] = await insert(users[i]);
   }
-  return users;
+  return users.length;
 }
 
 async function get(req) {
