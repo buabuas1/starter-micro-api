@@ -31,6 +31,7 @@ async function insert(user) {
   let userInDb = await Member.findOne({'userId': user.userId});
   userInDb = JSON.parse(JSON.stringify(userInDb));
   if (userInDb) {
+    userInDb.exist = true;
     return userInDb;
   } else {
     return await new Member(user).save();
@@ -41,7 +42,7 @@ async function insertBulk(users) {
   for (let i = 0; i < users.length; i++) {
     users[i] = await insert(users[i]);
   }
-  return users.length;
+  return users.filter(u => !u.exist).length;
 }
 
 async function get(req) {
