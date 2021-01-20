@@ -16,6 +16,7 @@ const UserFacebookTokenSchema = Joi.object({
   createdBy: Joi.string().required(),
   facebookUuid: Joi.string().required(),
   facebookName: Joi.string().required(),
+  position: Joi.number()
 })
 
 

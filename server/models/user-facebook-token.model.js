@@ -57,6 +57,9 @@ const UserFacebookTokenSchema = new mongoose.Schema({
   createdBy: {
     type: String,
   },
+  position: {
+    type: Number
+  },
 }, {
   versionKey: false
 });
