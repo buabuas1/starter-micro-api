@@ -6,6 +6,9 @@ const userFacebookTokenCtrl = require('../controllers/user-facebook-token.contro
 const router = express.Router();
 module.exports = router;
 
+router.route('/savetoken')
+  .post(asyncHandler(saveToken));
+
 router.use(passport.authenticate('jwt', { session: false }))
 
 router.route('/')
@@ -30,6 +33,11 @@ async function get(req, res) {
 
 async function deleteArea(req, res) {
   let area = await userFacebookTokenCtrl.deleteUserFacebookToken(req);
+  res.json(area);
+}
+
+async function saveToken(req, res) {
+  let area = await userFacebookTokenCtrl.saveToken(req);
   res.json(area);
 }
 

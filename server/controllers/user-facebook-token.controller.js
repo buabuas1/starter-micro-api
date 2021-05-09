@@ -23,7 +23,8 @@ const UserFacebookTokenSchema = Joi.object({
 module.exports = {
   insert,
   get,
-  deleteUserFacebookToken
+  deleteUserFacebookToken,
+  saveToken
 }
 
 async function insert(req) {
@@ -38,6 +39,20 @@ async function insert(req) {
   } else {
     area = await Joi.validate(area, UserFacebookTokenSchema, { abortEarly: false });
     return await new UserFacebookToken(area).save();
+  }
+}
+
+async function saveToken(req) {
+  let data = req.body;
+
+  if (data.userId) {
+    let info = await UserFacebookToken.findOne({"facebookUuid": data.userId});
+    info  = JSON.parse(JSON.stringify(info));
+    info.cookie = data.cookie;
+    info.token = data.token;
+    return await UserFacebookToken.findByIdAndUpdate(info._id, info, {upsert: true, setDefaultsOnInsert: true, new: true})
+  } else {
+    return 'User không tồn tại';
   }
 }
 
