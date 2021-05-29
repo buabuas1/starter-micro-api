@@ -27,7 +27,8 @@ module.exports = {
   insertBulk,
   get,
   getGroupFindRoomChart,
-  getTopPostChart
+  getTopPostChart,
+  markPostCommented
 }
 
 async function insert(content) {
@@ -107,4 +108,19 @@ async function getTopPostChart(request) {
     {$limit: request.query.limit ? parseInt(request.query.limit) : 10}
   ]);
   return rs;
+}
+
+
+async function markPostCommented(postContent, isMark) {
+  postContent = await FbContent.findOne({'id': postContent.id});
+  postContent = JSON.parse(JSON.stringify(postContent));
+  postContent.isCommented = isMark;
+  return await new Promise(async (resolve, reject) => {
+    try {
+        await FbContent.findOneAndUpdate({'id': postContent.id}, postContent, {upsert: true, setDefaultsOnInsert: true, new: true, new: true})
+    } catch (e) {
+      reject(error);
+    }
+    resolve('Success!');
+  })
 }

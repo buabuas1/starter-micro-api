@@ -14,6 +14,12 @@ router.route('/')
 router.route('/bulk')
   .post(asyncHandler(insertBulk));
 
+router.route('/mark')
+  .post(asyncHandler(markPostCommented));
+
+router.route('/unmark')
+  .post(asyncHandler(unmarkPostCommented));
+
 router.route('/chart')
   .get(asyncHandler(getChart));
 
@@ -47,5 +53,15 @@ async function getChart(req, res) {
 
 async function getTopPostChart(req, res) {
   let user = await fbCtrl.getTopPostChart(req);
+  res.json(user);
+}
+
+async function markPostCommented(req, res) {
+  let user = await fbCtrl.markPostCommented(req.body, true);
+  res.json(user);
+}
+
+async function unmarkPostCommented(req, res) {
+  let user = await fbCtrl.markPostCommented(req.body, false);
   res.json(user);
 }

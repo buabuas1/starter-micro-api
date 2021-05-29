@@ -47,6 +47,10 @@ const FbContentSchema = new mongoose.Schema({
   },
   parentContent: {
     type: String,
+  },
+  isCommented: {
+    type: Boolean,
+    default: false
   }
 })
 
