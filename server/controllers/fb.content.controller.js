@@ -98,7 +98,9 @@ async function getTopPostChart(request) {
       $match: {
         $and: [
           {contentTypes: {$elemMatch: {$eq: FOR_RENT}}},
-          {postTime: {$gte: new Date(request.query.postTime)}}
+          {postTime: {$gte: new Date(request.query.postTime)}},
+          {isCommented: !!request.query.isCommented},
+          {isComment: false},
         ]
       }
     },
