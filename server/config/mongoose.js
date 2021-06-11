@@ -6,7 +6,7 @@ const config = require('./config');
 // mongoose.set('useFindAndModify', false);
 // connect to mongo db
 const mongoUri = config.mongo.host;
-mongoose.connect(mongoUri, { keepAlive: 1 });
+mongoose.connect(mongoUri, { keepAlive: 1, poolSize: 10, bufferMaxEntries: 0, reconnectTries: 5000, useNewUrlParser: true,useUnifiedTopology: true });
 mongoose.connection.on('error', () => {
   throw new Error(`unable to connect to database: ${mongoUri}`);
 });
