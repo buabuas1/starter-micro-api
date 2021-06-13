@@ -113,12 +113,12 @@ async function getTopPostChart(request) {
 }
 
 
-async function markPostCommented(postContent, isMark) {
-  postContent = await FbContent.findOne({'id': postContent.id});
+async function markPostCommented(body, isMark) {
+  let postContent = await FbContent.findOne({'id': body.id});
   postContent = JSON.parse(JSON.stringify(postContent));
   postContent.isCommented = isMark;
   postContent.modifiedDate = new Date();
-  postContent.modifiedBy = postContent.modifiedBy;
+  postContent.modifiedBy = body.modifiedBy;
   return new Promise(async (resolve, reject) => {
     try {
         await FbContent.findOneAndUpdate({'id': postContent.id}, postContent, {upsert: true, setDefaultsOnInsert: true, new: true, new: true})
