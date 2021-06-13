@@ -51,7 +51,14 @@ const FbContentSchema = new mongoose.Schema({
   isCommented: {
     type: Boolean,
     default: false
-  }
+  },
+  modifiedDate: {
+    type: Date,
+    default: Date.now
+  },
+  modifiedBy: {
+    type: String,
+  },
 })
 
 const collectionName = 'FbBDSContent'
