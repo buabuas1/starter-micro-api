@@ -6,6 +6,12 @@ const fbCtrl = require('../controllers/fb.content.controller');
 const router = express.Router();
 module.exports = router;
 
+router.route('/public/top/post')
+  .get(asyncHandler(getTopPostChart));
+
+router.route('/public/mark')
+  .post(asyncHandler(markPostCommented));
+
 router.use(passport.authenticate('jwt', { session: false }))
 
 router.route('/')
