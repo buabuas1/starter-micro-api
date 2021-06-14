@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+export const COMMENT_STATUS = {NEW: 1, ISSUE: 2, SUCCESS: 3};
 const FbContentSchema = new mongoose.Schema({
   content: {
     type: String,
@@ -48,9 +48,9 @@ const FbContentSchema = new mongoose.Schema({
   parentContent: {
     type: String,
   },
-  isCommented: {
-    type: Boolean,
-    default: false
+  commentStatus: {
+    type: Number,
+    default: COMMENT_STATUS.NEW
   },
   modifiedDate: {
     type: Date,

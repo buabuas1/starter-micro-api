@@ -99,7 +99,7 @@ async function getTopPostChart(request) {
         $and: [
           {contentTypes: {$elemMatch: {$eq: FOR_RENT}}},
           {postTime: {$gte: new Date(request.query.postTime)}},
-          {isCommented: JSON.parse(request.query.isCommented)},
+          {commentStatus: { $in: [...request.query.commentStatus] }},
           {isComment: false},
         ]
       }
@@ -113,10 +113,10 @@ async function getTopPostChart(request) {
 }
 
 
-async function markPostCommented(body, isMark) {
+async function markPostCommented(body) {
   let postContent = await FbContent.findOne({'id': body.id});
   postContent = JSON.parse(JSON.stringify(postContent));
-  postContent.isCommented = isMark;
+  postContent.commentStatus = body.status;
   postContent.modifiedDate = new Date();
   postContent.modifiedBy = body.modifiedBy;
   return new Promise(async (resolve, reject) => {

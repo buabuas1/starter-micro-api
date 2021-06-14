@@ -63,11 +63,11 @@ async function getTopPostChart(req, res) {
 }
 
 async function markPostCommented(req, res) {
-  let user = await fbCtrl.markPostCommented(req.body, true);
+  let user = await fbCtrl.markPostCommented(req.body);
   res.json(user);
 }
 
 async function unmarkPostCommented(req, res) {
-  let user = await fbCtrl.markPostCommented(req.body, false);
+  let user = await fbCtrl.markPostCommented(req.body);
   res.json(user);
 }
