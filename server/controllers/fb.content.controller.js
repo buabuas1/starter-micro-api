@@ -92,6 +92,7 @@ async function getGroupFindRoomChart(request) {
 
 
 async function getTopPostChart(request) {
+  const arrStatus = request.query.commentStatus.split(',').map(c => parseInt(c));
   let rs = FbContent.aggregate([
     // First Stage
     {
@@ -99,7 +100,7 @@ async function getTopPostChart(request) {
         $and: [
           {contentTypes: {$elemMatch: {$eq: FOR_RENT}}},
           {postTime: {$gte: new Date(request.query.postTime)}},
-          {commentStatus: { $in: [...request.query.commentStatus] }},
+          {commentStatus: { $in: arrStatus }},
           {isComment: false},
         ]
       }
