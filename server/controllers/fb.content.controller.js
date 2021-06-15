@@ -146,7 +146,7 @@ async function getCommentPerUserChart(request) {
     {
       $match: {
         $and: [
-          {postTime: {$gte: new Date(request.query.postTime)}},
+          {modifiedDate: {$gte: new Date(request.query.postTime)}},
           {commentStatus: { $in: arrStatus }},
           {modifiedBy: { $ne: null }},
         ]
