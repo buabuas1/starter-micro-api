@@ -28,7 +28,8 @@ module.exports = {
   get,
   getGroupFindRoomChart,
   getTopPostChart,
-  markPostCommented
+  markPostCommented,
+  getCommentPerUserChart
 }
 
 async function insert(content) {
@@ -92,17 +93,25 @@ async function getGroupFindRoomChart(request) {
 
 
 async function getTopPostChart(request) {
-  const arrStatus = request.query.commentStatus.split(',').map(c => parseInt(c));
+  const arrStatus = (request.query.commentStatus || '').split(',').map(c => parseInt(c));
+  let aggregate = [
+    {postTime: {$gte: new Date(request.query.postTime)}},
+    {commentStatus: { $in: arrStatus }},
+    {isComment: false},
+  ];
+  if (request.query.type) {
+      aggregate = [
+      {contentTypes: {$elemMatch: {$eq: request.query.type}}},
+      {postTime: {$gte: new Date(request.query.postTime)}},
+      {commentStatus: { $in: arrStatus }},
+      {isComment: false},
+    ];
+  }
   let rs = FbContent.aggregate([
     // First Stage
     {
       $match: {
-        $and: [
-          {contentTypes: {$elemMatch: {$eq: FOR_RENT}}},
-          {postTime: {$gte: new Date(request.query.postTime)}},
-          {commentStatus: { $in: arrStatus }},
-          {isComment: false},
-        ]
+        $and: aggregate
       }
     },
     {
@@ -128,4 +137,41 @@ async function markPostCommented(body) {
     }
     resolve('Success!');
   })
+}
+
+async function getCommentPerUserChart(request) {
+  const arrStatus = (request.query.commentStatus || '').split(',').map(c => parseInt(c));
+  let rs = FbContent.aggregate([
+    // First Stage
+    {
+      $match: {
+        $and: [
+          {postTime: {$gte: new Date(request.query.postTime)}},
+          {commentStatus: { $in: arrStatus }},
+          {modifiedBy: { $ne: null }},
+        ]
+      }
+    },
+    {
+      $group:
+        {
+          _id: "$modifiedBy",
+          totalPost: {$sum: 1}
+        }
+    },
+    {
+      $lookup:
+        {
+          from: "UserFacebookToken",
+          localField: "_id",
+          foreignField: "facebookUuid",
+          as: "user"
+        }
+    },
+    {
+      $sort: {totalPost: -1}
+    },
+    {$limit: request.query.limit ? parseInt(request.query.limit) : 10}
+  ]);
+  return rs;
 }

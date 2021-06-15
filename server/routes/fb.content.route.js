@@ -32,6 +32,9 @@ router.route('/chart')
 router.route('/chart/top/post')
   .get(asyncHandler(getTopPostChart));
 
+router.route('/chart/top/postbyuser')
+  .get(asyncHandler(getCommentPerUserChart));
+
 router.route('/')
   .get(asyncHandler(get));
 
@@ -69,5 +72,10 @@ async function markPostCommented(req, res) {
 
 async function unmarkPostCommented(req, res) {
   let user = await fbCtrl.markPostCommented(req.body);
+  res.json(user);
+}
+
+async function getCommentPerUserChart(req, res) {
+  let user = await fbCtrl.getCommentPerUserChart(req);
   res.json(user);
 }
