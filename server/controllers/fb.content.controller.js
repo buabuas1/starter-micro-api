@@ -125,6 +125,9 @@ async function getTopPostChart(request) {
 
 async function markPostCommented(body) {
   let postContent = await FbContent.findOne({'id': body.id});
+  if (!postContent) {
+    postContent = await FbContent.findOne({"url" : {$regex : body.id}, isComment: true});
+  }
   postContent = JSON.parse(JSON.stringify(postContent));
   postContent.commentStatus = body.status;
   postContent.modifiedDate = new Date();
