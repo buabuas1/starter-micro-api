@@ -1,6 +1,6 @@
 {
   "name": "mean",
-  "version": "2.0.3",
+  "version": "2.0.2",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
