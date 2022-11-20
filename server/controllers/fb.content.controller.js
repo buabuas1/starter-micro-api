@@ -16,6 +16,7 @@ const fbContentSchema = Joi.object({
   phone: Joi.any(),
   isComment: Joi.any(),
   parentContent: Joi.any(),
+  numberOfRooms: Joi.number(),
 })
 
 const bulkSchema = Joi.array().items(fbContentSchema)
@@ -60,6 +61,9 @@ async function get(request) {
   }
   if (request.query.createdDate) {
     query.createdDate = {$gte: new Date(request.query.createdDate)};
+  }
+  if (request.query.numberOfRooms) {
+    query.createdDate = {$gte: request.query.numberOfRooms};
   }
   let users = FbContent.find(query).sort({_id: -1});
   return users;

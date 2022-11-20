@@ -32,6 +32,9 @@ const FbContentSchema = new mongoose.Schema({
   commentCount: {
     type: Number,
   },
+  numberOfRooms: {
+    type: Number,
+  },
   authorId: {
     type: String,
   },
