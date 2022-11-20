@@ -63,7 +63,7 @@ async function get(request) {
     query.createdDate = {$gte: new Date(request.query.createdDate)};
   }
   if (request.query.numberOfRooms) {
-    query.createdDate = {$gte: request.query.numberOfRooms};
+    query.numberOfRooms = {$gte: request.query.numberOfRooms};
   }
   let users = FbContent.find(query).sort({_id: -1});
   return users;
